@@ -1,4 +1,10 @@
- package com.example.userdata.model;
+<dependency>
+<groupId>org.projectlombok</groupId>
+<artifactId>lombok</artifactId>
+<optional>true</optional>
+</dependency>
+
+package com.example.userdata.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
