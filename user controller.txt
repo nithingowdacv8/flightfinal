@@ -1,3 +1,52 @@
+@PostMapping("/login")
+public User putUsers(@RequestBody UserLogin userLogin) {
+    try {
+        List<User> userDB = userRepository.findAll();
+
+        // Logging the size of the userDB for debugging purposes
+        LOGGER.info("Number of users in DB: {}", userDB.size());
+
+        for (User ob : userDB) {
+            if (ob.getEmail() != null && ob.getPassword() != null &&
+                ob.getEmail().equals(userLogin.getEmail()) && ob.getPassword().equals(userLogin.getPassword())) {
+                // Logging for debugging purposes
+                LOGGER.info("User found with email: {}", userLogin.getEmail());
+
+                return ob;
+            }
+        }
+
+        // Logging for debugging purposes
+        LOGGER.info("User not found for email: {}", userLogin.getEmail());
+
+        // Creating an empty user when no match is found
+        User emptyUser = new User();
+        emptyUser.setId(null);
+        emptyUser.setFirstName("");
+        emptyUser.setLastName("");
+        emptyUser.setGender("");
+        emptyUser.setDob("");
+        emptyUser.setPhone(0L);
+        emptyUser.setUsername("");
+        emptyUser.setEmail("");
+        emptyUser.setPassword("");
+        emptyUser.setRole("");
+        return emptyUser;
+    } catch (Exception e) {
+        // Log the exception for further analysis
+        LOGGER.error("An error occurred in /login endpoint", e);
+        // You might want to throw a custom exception or return an appropriate response
+        return null;
+    }
+}
+
+
+
+
+
+
+
+
 <dependency>
 <groupId>org.projectlombok</groupId>
 <artifactId>lombok</artifactId>
